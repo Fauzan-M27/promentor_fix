@@ -123,9 +123,13 @@
             {{-- Pengalaman --}}
             <div style="margin-bottom:12px;">
                 <label class="pm-label">Pengalaman Organisasi / Kepanitiaan</label>
-                <textarea name="pengalaman_organisasi" class="pm-input" rows="4"
+                <textarea name="pengalaman_organisasi" id="pengalaman_organisasi" class="pm-input" rows="4"
+                    maxlength="255"
                     placeholder="Ceritakan pengalaman organisasi atau kepanitiaan yang pernah diikuti..."
                     {{ $sudahDaftar ? 'disabled' : '' }}>{{ old('pengalaman_organisasi') }}</textarea>
+                <div style="font-size:11px;color:#888;margin-top:4px;text-align:right;">
+                    <span id="char_count">0</span>/255 karakter
+                </div>
                 @error('pengalaman_organisasi')<div style="color:#991b1b;font-size:11px;margin-top:3px;">{{ $message }}</div>@enderror
             </div>
 
@@ -195,5 +199,31 @@
 
 <script>
     lucide.createIcons();
+
+    // Character counter untuk pengalaman_organisasi
+    const textarea = document.getElementById('pengalaman_organisasi');
+    const charCount = document.getElementById('char_count');
+    
+    if (textarea && charCount) {
+        // Update counter saat halaman dimuat
+        charCount.textContent = textarea.value.length;
+        
+        // Update counter saat user mengetik
+        textarea.addEventListener('input', function() {
+            charCount.textContent = this.value.length;
+            
+            // Ubah warna jika mendekati limit
+            if (this.value.length >= 240) {
+                charCount.style.color = '#dc2626'; // merah
+                charCount.style.fontWeight = '600';
+            } else if (this.value.length >= 200) {
+                charCount.style.color = '#ea580c'; // orange
+                charCount.style.fontWeight = '600';
+            } else {
+                charCount.style.color = '#888';
+                charCount.style.fontWeight = '400';
+            }
+        });
+    }
 </script>
 </body></html>

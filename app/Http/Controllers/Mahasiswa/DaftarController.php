@@ -36,7 +36,7 @@ class DaftarController extends Controller
             'ipk'                   => ['required', 'numeric', 'min:0', 'max:4'],
             'no_wa'                 => ['required', 'string', 'max:20'],
             'email'                 => ['required', 'email'],
-            'pengalaman_organisasi' => ['nullable', 'string', 'max:1000'],
+            'pengalaman_organisasi' => ['nullable', 'string', 'max:255'],
             'ketersediaan_waktu'    => ['required', function ($attribute, $value, $fail) {
                 if (!in_array($value, ['1-2', '2-3', '3-4', '4+'])) {
                     $fail('Pilihan ketersediaan waktu tidak valid.');
